@@ -1,5 +1,8 @@
 use day_01::part1;
 
 fn main() {
-  part1::process();
+  let text = include_str!("../../input1.txt");
+  let val = part1::process(text);
+
+  println!("{val}");
 }
