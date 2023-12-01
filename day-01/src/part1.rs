@@ -1,19 +1,15 @@
 pub fn process(input: &str) -> usize {
   let output: usize = input
     .lines()
-    .map(|line| {
-      line
-        .chars()
-        .filter(|ch| ch.is_numeric())
-        .collect::<Vec<_>>()
-    })
-    .map(|numbers| {
-      let first = numbers.first().unwrap().clone();
-      let last = numbers.last().unwrap().clone();
+    .map(|line| line.chars().filter_map(|ch| ch.to_digit(10)))
+    .map(|mut numbers| {
+      let first = numbers.next().unwrap();
+      let last = numbers.last().unwrap_or(first);
 
-      format!("{first}{last}")
+      println!("{first}{last}");
+
+      format!("{first}{last}").parse::<usize>().unwrap_or(0)
     })
-    .map(|num| num.parse::<usize>().unwrap_or(0))
     .sum();
 
   output
@@ -30,6 +26,6 @@ pqr3stu8vwx
 a1b2c3d4e5f
 treb7uchet";
 
-    assert_eq!(process(input), 142)
+    assert_eq!(process(input), 142);
   }
 }
