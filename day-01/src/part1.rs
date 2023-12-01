@@ -13,7 +13,7 @@ pub fn process(input: &str) -> usize {
 
       format!("{first}{last}")
     })
-    .map(|num| num.parse::<usize>().unwrap())
+    .map(|num| num.parse::<usize>().unwrap_or(0))
     .sum();
 
   output
