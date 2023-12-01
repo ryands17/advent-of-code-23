@@ -1,4 +1,20 @@
-use std::iter;
+use std::{collections::HashMap, iter};
+
+fn word_to_digit() -> HashMap<&'static str, char> {
+  let mut word_map = HashMap::new();
+
+  word_map.insert("one", '1');
+  word_map.insert("two", '2');
+  word_map.insert("three", '3');
+  word_map.insert("four", '4');
+  word_map.insert("five", '5');
+  word_map.insert("six", '6');
+  word_map.insert("seven", '7');
+  word_map.insert("eight", '8');
+  word_map.insert("nine", '9');
+
+  word_map
+}
 
 pub fn process(input: &str) -> usize {
   let output: usize = input
@@ -7,33 +23,20 @@ pub fn process(input: &str) -> usize {
       let mut i = 0;
 
       let converted_str = iter::from_fn(move || {
+        let word_map = word_to_digit();
         let slice = &line[i..];
-
         let result: Option<char>;
-        if slice.starts_with("one") {
-          result = Some('1');
-        } else if slice.starts_with("two") {
-          result = Some('2');
-        } else if slice.starts_with("three") {
-          result = Some('3');
-        } else if slice.starts_with("four") {
-          result = Some('4');
-        } else if slice.starts_with("five") {
-          result = Some('5');
-        } else if slice.starts_with("six") {
-          result = Some('6');
-        } else if slice.starts_with("seven") {
-          result = Some('7');
-        } else if slice.starts_with("eight") {
-          result = Some('8');
-        } else if slice.starts_with("nine") {
-          result = Some('9');
-        } else {
-          result = slice.chars().next();
+
+        for (k, v) in &word_map {
+          if slice.starts_with(k) {
+            result = Some(*v);
+            i += 1;
+            return result;
+          }
         }
 
+        result = slice.chars().next();
         i += 1;
-
         result
       });
 
