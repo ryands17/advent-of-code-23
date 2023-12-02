@@ -7,3 +7,4 @@ members = ["day-*"]
 
 [workspace.dependencies]
 thiserror = "1.0.50"
+regex = "1.10.2"
