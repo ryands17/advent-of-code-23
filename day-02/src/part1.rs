@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+use regex::Regex;
+
 pub fn process(input: &str) -> usize {
   let mut game_size = HashMap::new();
   game_size.insert("red", 12);
@@ -11,41 +13,32 @@ pub fn process(input: &str) -> usize {
     .map(|line| {
       let mut sp = line.split(':');
 
-      let game = sp
-        .next()
+      let re = Regex::new(r"(\d+)").unwrap();
+      let game = re
+        .find(sp.next().unwrap())
         .unwrap()
-        .trim()
-        .split(' ')
-        .last()
-        .unwrap()
+        .as_str()
         .parse::<usize>()
         .unwrap();
 
       let rounds = sp.next().unwrap().trim();
-      let rounds = rounds.split(';');
+      let re = Regex::new(r"(\d+) (\w+)").unwrap();
 
-      let mut valid_games = rounds.map(|round| {
-        let round = round.trim();
-        let games = round.split(',');
-        let mut games = games.map(|game| game.trim());
+      let result = re
+        .captures_iter(rounds)
+        .map(|val| {
+          let count = val.get(1).unwrap().as_str().parse::<usize>().unwrap();
+          let colour = val.get(2).unwrap().as_str();
 
-        let result = games.all(|game| {
-          let mut sp = game.split(' ');
-
-          let count = sp.next().unwrap().parse::<usize>().unwrap();
-          let colour = sp.next().unwrap();
-
-          if let Some(val) = game_size.get(colour) {
-            return count <= *val;
+          (count, colour)
+        })
+        .all(|val| {
+          if let Some(c) = game_size.get(val.1) {
+            return val.0 <= *c;
           }
 
           return false;
         });
-
-        result
-      });
-
-      let result = valid_games.all(|is_valid| is_valid);
 
       if result {
         game

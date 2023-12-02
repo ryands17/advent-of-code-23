@@ -7,26 +7,27 @@ pub fn process(input: &str) -> usize {
       let line = line.split(':').last().unwrap().trim();
       let re = Regex::new(r"(\d+) (\w+)").unwrap();
 
-      let values = re.captures_iter(line).map(|val| {
-        let count = val.get(1).unwrap().as_str().parse::<usize>().unwrap();
-        let colour = val.get(2).unwrap().as_str();
-
-        (count, colour)
-      });
-
       let mut red_count = 1;
       let mut blue_count = 1;
       let mut green_count = 1;
 
-      for (count, colour) in values {
-        if colour == "red" {
-          red_count = std::cmp::max(red_count, count);
-        } else if colour == "green" {
-          green_count = std::cmp::max(green_count, count);
-        } else if colour == "blue" {
-          blue_count = std::cmp::max(blue_count, count);
-        }
-      }
+      re.captures_iter(line)
+        .map(|val| {
+          let count = val.get(1).unwrap().as_str().parse::<usize>().unwrap();
+          let colour = val.get(2).unwrap().as_str();
+
+          (count, colour)
+        })
+        .into_iter()
+        .for_each(|(count, colour)| {
+          if colour == "red" {
+            red_count = std::cmp::max(red_count, count);
+          } else if colour == "green" {
+            green_count = std::cmp::max(green_count, count);
+          } else if colour == "blue" {
+            blue_count = std::cmp::max(blue_count, count);
+          }
+        });
 
       red_count * green_count * blue_count
     })
