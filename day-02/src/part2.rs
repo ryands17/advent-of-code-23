@@ -1,17 +1,22 @@
+use lazy_static::lazy_static;
 use regex::Regex;
+
+lazy_static! {
+  static ref NUMBER_AND_WORD_MATCHER: Regex = Regex::new(r"(\d+) (\w+)").unwrap();
+}
 
 pub fn process(input: &str) -> usize {
   let output = input
     .lines()
     .map(|line| {
       let line = line.split(':').last().unwrap().trim();
-      let re = Regex::new(r"(\d+) (\w+)").unwrap();
 
       let mut red_count = 1;
       let mut blue_count = 1;
       let mut green_count = 1;
 
-      re.captures_iter(line)
+      NUMBER_AND_WORD_MATCHER
+        .captures_iter(line)
         .map(|val| {
           let count = val.get(1).unwrap().as_str().parse::<usize>().unwrap();
           let colour = val.get(2).unwrap().as_str();

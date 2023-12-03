@@ -1,6 +1,11 @@
+use lazy_static::lazy_static;
+use regex::Regex;
 use std::collections::HashMap;
 
-use regex::Regex;
+lazy_static! {
+  static ref NUMBER_MATCHER: Regex = Regex::new(r"(\d+)").unwrap();
+  static ref NUMBER_AND_WORD_MATCHER: Regex = Regex::new(r"(\d+) (\w+)").unwrap();
+}
 
 pub fn process(input: &str) -> usize {
   let mut game_size = HashMap::new();
@@ -13,8 +18,7 @@ pub fn process(input: &str) -> usize {
     .map(|line| {
       let mut sp = line.split(':');
 
-      let re = Regex::new(r"(\d+)").unwrap();
-      let game = re
+      let game = NUMBER_MATCHER
         .find(sp.next().unwrap())
         .unwrap()
         .as_str()
@@ -22,9 +26,8 @@ pub fn process(input: &str) -> usize {
         .unwrap();
 
       let rounds = sp.next().unwrap().trim();
-      let re = Regex::new(r"(\d+) (\w+)").unwrap();
 
-      let result = re
+      let result = NUMBER_AND_WORD_MATCHER
         .captures_iter(rounds)
         .map(|val| {
           let count = val.get(1).unwrap().as_str().parse::<usize>().unwrap();
