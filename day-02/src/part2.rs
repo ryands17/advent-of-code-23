@@ -6,7 +6,7 @@ lazy_static! {
 }
 
 pub fn process(input: &str) -> usize {
-  let output = input
+  input
     .lines()
     .map(|line| {
       let line = line.split(':').last().unwrap().trim();
@@ -36,9 +36,7 @@ pub fn process(input: &str) -> usize {
 
       red_count * green_count * blue_count
     })
-    .sum::<usize>();
-
-  output
+    .sum::<usize>()
 }
 
 #[cfg(test)]

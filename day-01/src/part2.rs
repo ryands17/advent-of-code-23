@@ -1,4 +1,4 @@
-use std::{cell::RefCell, collections::HashMap, iter};
+use std::{collections::HashMap, rc::Rc};
 
 fn word_to_digit() -> HashMap<&'static str, char> {
   let mut word_map = HashMap::new();
@@ -17,16 +17,15 @@ fn word_to_digit() -> HashMap<&'static str, char> {
 }
 
 pub fn process(input: &str) -> usize {
+  let words = Rc::new(word_to_digit());
+
   let output: usize = input
     .lines()
     .map(|line| {
       let mut i = 0;
 
-      let words = RefCell::new(word_to_digit());
-
-      let converted_str = iter::from_fn(move || {
-        let word_map = words.borrow();
-
+      let word_map = Rc::clone(&words);
+      std::iter::from_fn(move || {
         let slice = &line[i..];
         let result: Option<char>;
 
@@ -41,9 +40,8 @@ pub fn process(input: &str) -> usize {
         result = slice.chars().next();
         i += 1;
         result
-      });
-
-      converted_str.filter_map(|ch| ch.to_digit(10))
+      })
+      .filter_map(|ch| ch.to_digit(10))
     })
     .map(|mut numbers| {
       let first = numbers.next().unwrap();

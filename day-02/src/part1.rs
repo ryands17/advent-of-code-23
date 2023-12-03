@@ -13,7 +13,7 @@ pub fn process(input: &str) -> usize {
   game_size.insert("green", 13);
   game_size.insert("blue", 14);
 
-  let output: usize = input
+  input
     .lines()
     .map(|line| {
       let mut sp = line.split(':');
@@ -49,9 +49,7 @@ pub fn process(input: &str) -> usize {
         0
       }
     })
-    .sum();
-
-  output
+    .sum()
 }
 
 #[cfg(test)]

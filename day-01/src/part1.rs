@@ -1,18 +1,14 @@
 pub fn process(input: &str) -> usize {
-  let output: usize = input
+  input
     .lines()
     .map(|line| line.chars().filter_map(|ch| ch.to_digit(10)))
     .map(|mut numbers| {
       let first = numbers.next().unwrap();
       let last = numbers.last().unwrap_or(first);
 
-      println!("{first}{last}");
-
       format!("{first}{last}").parse::<usize>().unwrap_or(0)
     })
-    .sum();
-
-  output
+    .sum()
 }
 
 #[cfg(test)]
