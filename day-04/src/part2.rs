@@ -1,7 +1,7 @@
 use std::collections::HashMap;
 
 pub fn process(input: &str) -> usize {
-  let mut card_count: HashMap<usize, usize> = HashMap::new();
+  let mut card_count = HashMap::new();
 
   input.lines().enumerate().for_each(|(game, line)| {
     let game = game + 1;

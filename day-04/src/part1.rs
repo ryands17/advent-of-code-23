@@ -1,5 +1,5 @@
 pub fn process(input: &str) -> usize {
-  let result = input
+  input
     .lines()
     .map(|line| {
       let all_numbers = line.split(':').last().unwrap().trim();
@@ -30,9 +30,7 @@ pub fn process(input: &str) -> usize {
         (2_usize).pow(count - 1)
       }
     })
-    .sum::<_>();
-
-  result
+    .sum::<_>()
 }
 
 #[cfg(test)]
