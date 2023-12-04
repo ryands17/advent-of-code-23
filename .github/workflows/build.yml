@@ -25,8 +25,7 @@ jobs:
           restore-keys: ${{ runner.os }}-cargo-
 
       - name: Install Just
-        run: cargo install just@1.16.0
-        if: ${{ ! command -v just &> /dev/null }}
+        run: ./.github/workflows/install-just.sh
 
       - name: Process
         run: just test_all
