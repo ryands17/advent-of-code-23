@@ -23,7 +23,6 @@ pub fn process(input: &str) -> usize {
 
           (count, colour)
         })
-        .into_iter()
         .for_each(|(count, colour)| {
           if colour == "red" {
             red_count = std::cmp::max(red_count, count);

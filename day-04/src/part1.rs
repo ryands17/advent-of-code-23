@@ -30,7 +30,7 @@ pub fn process(input: &str) -> usize {
       if count == 0 {
         0
       } else {
-        (2 as usize).pow(count - 1)
+        (2_usize).pow(count - 1)
       }
     })
     .sum::<_>();

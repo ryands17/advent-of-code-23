@@ -33,7 +33,7 @@ pub fn process(input: &str) -> usize {
     *card_count.entry(game).or_insert(0) += 1;
 
     let next_game = game + 1;
-    let current_game_count = card_count.get(&game).unwrap().clone();
+    let current_game_count = *card_count.get(&game).unwrap();
 
     for g in next_game..next_game + matches {
       *card_count.entry(g).or_insert(0) += current_game_count;

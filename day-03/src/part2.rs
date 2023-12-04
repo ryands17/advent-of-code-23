@@ -24,39 +24,35 @@ pub fn process(input: &str) -> usize {
           let mut gears = HashSet::new();
 
           // check left
-          if pos > line_start {
-            if (&line).chars().nth(pos - 1).unwrap().is_digit(10) {
-              let val = NUMBERS_REGEX
-                .find_iter(&line[..pos])
-                .last()
-                .unwrap()
-                .as_str()
-                .parse::<usize>()
-                .unwrap();
+          if pos > line_start && line.chars().nth(pos - 1).unwrap().is_ascii_digit() {
+            let val = NUMBERS_REGEX
+              .find_iter(&line[..pos])
+              .last()
+              .unwrap()
+              .as_str()
+              .parse::<usize>()
+              .unwrap();
 
-              gears.insert(val);
-            }
+            gears.insert(val);
           }
 
           // check right
-          if pos < line_end {
-            if (&line).chars().nth(pos + 1).unwrap().is_digit(10) {
-              let val = NUMBERS_REGEX
-                .find_iter(&line[pos + 1..])
-                .next()
-                .unwrap()
-                .as_str()
-                .parse::<usize>()
-                .unwrap();
+          if pos < line_end && line.chars().nth(pos + 1).unwrap().is_ascii_digit() {
+            let val = NUMBERS_REGEX
+              .find_iter(&line[pos + 1..])
+              .next()
+              .unwrap()
+              .as_str()
+              .parse::<usize>()
+              .unwrap();
 
-              gears.insert(val);
-            }
+            gears.insert(val);
           }
 
           // check top and diagonal
           if i > vector_start {
             let top_line = lines.get(i - 1).unwrap();
-            NUMBERS_REGEX.find_iter(&top_line).for_each(|mt| {
+            NUMBERS_REGEX.find_iter(top_line).for_each(|mt| {
               let diagonal = (pos - 1, pos + 1);
               let start = mt.start();
               let end = mt.end() - 1;
@@ -73,7 +69,7 @@ pub fn process(input: &str) -> usize {
           // check bottom and diagonal
           if i < vector_end {
             let bottom_line = lines.get(i + 1).unwrap();
-            NUMBERS_REGEX.find_iter(&bottom_line).for_each(|mt| {
+            NUMBERS_REGEX.find_iter(bottom_line).for_each(|mt| {
               let diagonal = (pos - 1, pos + 1);
               let start = mt.start();
               let end = mt.end() - 1;
@@ -93,7 +89,7 @@ pub fn process(input: &str) -> usize {
             None
           }
         })
-        .map(|gear| gear.iter().fold(1, |acc, val| acc * val))
+        .map(|gear| gear.iter().product::<usize>())
         .sum::<usize>()
     })
     .sum::<usize>()

@@ -19,7 +19,7 @@ pub fn process(input: &str) -> usize {
       let line_end = line.len();
 
       NUMBERS_REGEX
-        .find_iter(&line)
+        .find_iter(line)
         .filter_map(|mt| {
           let start_index = mt.start();
           let end_index = mt.end();

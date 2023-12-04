@@ -40,7 +40,7 @@ pub fn process(input: &str) -> usize {
             return val.0 <= *c;
           }
 
-          return false;
+          false
         });
 
       if result {
