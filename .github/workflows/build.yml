@@ -26,6 +26,7 @@ jobs:
 
       - name: Install Just
         run: cargo install just@1.16.0
+        if: ${{ ! command -v just &> /dev/null }}
 
       - name: Process
-        run: just
+        run: just test_all
