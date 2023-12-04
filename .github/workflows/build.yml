@@ -11,9 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install Just
-        run: cargo install just@1.16.0
-
       - name: Set up cargo cache
         uses: actions/cache@v3
         continue-on-error: false
@@ -26,6 +23,9 @@ jobs:
             target/
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: ${{ runner.os }}-cargo-
+
+      - name: Install Just
+        run: cargo install just@1.16.0
 
       - name: Process
         run: just
