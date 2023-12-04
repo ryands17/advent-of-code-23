@@ -13,19 +13,16 @@ pub fn process(input: &str) -> usize {
         .filter_map(|x| x.parse::<usize>().ok())
         .collect::<Vec<_>>();
 
-      let lottery_numbers = sp
+      let count: u32 = sp
         .next()
         .unwrap()
         .trim()
         .split(' ')
-        .filter_map(|x| x.parse::<usize>().ok());
-
-      let mut count = 0;
-      for num in lottery_numbers {
-        if winning_numbers.contains(&num) {
-          count += 1;
-        }
-      }
+        .filter_map(|x| x.parse::<usize>().ok())
+        .filter(|num| winning_numbers.contains(num))
+        .count()
+        .try_into()
+        .unwrap();
 
       if count == 0 {
         0
