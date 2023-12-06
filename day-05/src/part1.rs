@@ -1,7 +1,7 @@
 pub fn process(input: &str) -> usize {
   let mut lines = input.lines();
   let seeds = lines.next().unwrap().split(':').last().unwrap().split(' ');
-  let mappings = lines.filter(|l| l.len() > 0).collect::<Vec<_>>();
+  let mappings = lines.filter(|l| !l.is_empty()).collect::<Vec<_>>();
 
   seeds
     .filter_map(|x| x.parse::<usize>().ok())

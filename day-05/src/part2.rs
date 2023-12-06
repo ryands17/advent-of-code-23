@@ -37,8 +37,7 @@ pub fn process(input: &str) -> usize {
     }
 
     let mut mappings: Vec<(usize, usize)> = Vec::new();
-    while seeds.len() > 0 {
-      let (start, end) = seeds.pop().unwrap();
+    while let Some((start, end)) = seeds.pop() {
       let mut is_match = false;
 
       for (to, from, offset) in &ranges {
@@ -71,7 +70,7 @@ pub fn process(input: &str) -> usize {
 
   let (start, end) = seeds.iter().min().unwrap();
 
-  start.min(end);
+  *start.min(end)
 }
 
 #[cfg(test)]
