@@ -1,7 +1,7 @@
 pub fn process(input: &str) -> usize {
   let mut lines = input.lines();
 
-  let mut times = lines
+  let times = lines
     .next()
     .unwrap()
     .split(':')
@@ -18,9 +18,8 @@ pub fn process(input: &str) -> usize {
     .unwrap()
     .split(' ')
     .filter_map(|x| x.parse::<usize>().ok())
-    .map(|distance| {
-      let time = times.next().unwrap();
-
+    .zip(times)
+    .map(|(distance, time)| {
       (0..time)
         .filter(|t| {
           let covered_distance = t * (time - t);
