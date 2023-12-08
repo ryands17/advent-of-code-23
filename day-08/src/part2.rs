@@ -5,6 +5,7 @@ pub fn process(input: &str) -> usize {
   let mut lines = input.lines();
 
   let pattern = lines.next().unwrap().chars().collect::<Vec<_>>();
+  let end = pattern.len();
   lines.next();
 
   let mappings = lines
@@ -38,7 +39,6 @@ pub fn process(input: &str) -> usize {
       let mut start_val = *start;
       let mut steps = 0_usize;
       let mut pointer = 0_usize;
-      let end = pattern.len();
 
       while !start_val.ends_with('Z') {
         let val = mappings.get(&start_val).unwrap();
@@ -51,7 +51,7 @@ pub fn process(input: &str) -> usize {
         pointer += 1;
         steps += 1;
         if pointer == end {
-          pointer = 0_usize;
+          pointer = 0;
         }
       }
       steps

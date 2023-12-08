@@ -47,7 +47,7 @@ pub fn process(input: &str) -> usize {
     steps += 1;
 
     if pointer == end {
-      pointer = 0_usize;
+      pointer = 0;
     }
   }
 
