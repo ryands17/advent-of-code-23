@@ -1,0 +1,20 @@
+{
+  "name": "advent-of-code-23",
+  "version": "1.0.0",
+  "description": "This repo is [Advent of Code](https://adventofcode.com/2023) challenges implemented in Rust: [![Build Status](https://github.com/ryands17/advent-of-code-23/actions/workflows/build.yml/badge.svg)](https://github.com/ryands17/advent-of-code-23/actions/workflows/build.yml)",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "^3.1.0",
+    "prettier-plugin-toml": "^2.0.1"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "plugins": [
+      "prettier-plugin-toml"
+    ]
+  }
+}
