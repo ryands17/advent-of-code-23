@@ -31,7 +31,7 @@ pub fn process(input: &str) -> usize {
       let mut start_val = *start;
       let mut steps = 0_usize;
 
-      while !start_val.ends_with("Z") {
+      while !start_val.ends_with('Z') {
         let val = mappings.get(&start_val).unwrap();
         if let Some(direction) = pattern.next() {
           start_val = if direction == 'L' { &val.0 } else { &val.1 };
