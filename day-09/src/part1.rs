@@ -8,19 +8,21 @@ pub fn process(input: &str) -> isize {
         .collect::<Vec<_>>()
     })
     .map(|mut section| {
-      let mut diffs = Vec::new();
-      diffs.push(*section.iter().last().unwrap());
+      let mut i = 0;
+      std::iter::from_fn(|| {
+        if i == 0 {
+          i += 1;
+          return Some(*section.last().unwrap());
+        }
 
-      while !section.iter().all(|x| x == &0) {
-        section = section
-          .windows(2)
-          .map(|val| val[1] - val[0])
-          .collect::<Vec<_>>();
+        section = section.windows(2).map(|v| v[1] - v[0]).collect::<Vec<_>>();
+        if section.iter().all(|v| v == &0) {
+          return None;
+        }
 
-        diffs.push(*section.iter().last().unwrap());
-      }
-
-      diffs.iter().sum::<isize>()
+        return Some(*section.last().unwrap());
+      })
+      .sum::<isize>()
     })
     .sum()
 }

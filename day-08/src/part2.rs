@@ -4,7 +4,7 @@ use std::collections::HashMap;
 pub fn process(input: &str) -> usize {
   let mut lines = input.lines();
 
-  let mut pattern = lines.next().unwrap().chars().cycle();
+  let pattern = lines.next().unwrap().chars();
   // skip empty line
   lines.next();
 
@@ -27,10 +27,11 @@ pub fn process(input: &str) -> usize {
     .keys()
     .filter(|k| k.ends_with('A'))
     .map(|start| {
+      let mut pattern = pattern.clone().cycle();
       let mut start_val = *start;
       let mut steps = 0_usize;
 
-      while !start_val.ends_with('Z') {
+      while !start_val.ends_with("Z") {
         let val = mappings.get(&start_val).unwrap();
         if let Some(direction) = pattern.next() {
           start_val = if direction == 'L' { &val.0 } else { &val.1 };
