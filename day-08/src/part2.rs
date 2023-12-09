@@ -4,8 +4,8 @@ use std::collections::HashMap;
 pub fn process(input: &str) -> usize {
   let mut lines = input.lines();
 
-  let pattern = lines.next().unwrap().chars().collect::<Vec<_>>();
-  let end = pattern.len();
+  let mut pattern = lines.next().unwrap().chars().cycle();
+  // skip empty line
   lines.next();
 
   let mappings = lines
@@ -29,16 +29,13 @@ pub fn process(input: &str) -> usize {
     .map(|start| {
       let mut start_val = *start;
       let mut steps = 0_usize;
-      let mut pointer = 0_usize;
 
       while !start_val.ends_with('Z') {
         let val = mappings.get(&start_val).unwrap();
-        let direction = pattern.get(pointer).unwrap();
-        start_val = if direction == &'L' { &val.0 } else { &val.1 };
-
-        pointer += 1;
-        steps += 1;
-        pointer = if pointer == end { 0 } else { pointer };
+        if let Some(direction) = pattern.next() {
+          start_val = if direction == 'L' { &val.0 } else { &val.1 };
+          steps += 1;
+        }
       }
       steps
     })
