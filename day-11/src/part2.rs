@@ -7,12 +7,7 @@ pub fn process(input: &str) -> usize {
   let empty_rows = space
     .iter()
     .enumerate()
-    .filter_map(|(i, line)| {
-      if line.iter().all(|ch| ch == &'.') {
-        return Some(i);
-      }
-      None
-    })
+    .filter_map(|(i, line)| line.iter().all(|ch| ch == &'.').then_some(i))
     .collect::<Vec<_>>();
 
   let empty_cols = (0..space.len())
@@ -30,12 +25,10 @@ pub fn process(input: &str) -> usize {
     .iter()
     .enumerate()
     .flat_map(|(row, line)| {
-      line.iter().enumerate().filter_map(move |(col, ch)| {
-        if ch == &'#' {
-          return Some((row, col));
-        }
-        None
-      })
+      line
+        .iter()
+        .enumerate()
+        .filter_map(move |(col, ch)| ch.eq(&'#').then_some((row, col)))
     })
     .collect::<Vec<_>>();
 
