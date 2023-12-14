@@ -1,4 +1,4 @@
-use day_10::part2;
+use day_12::part2;
 
 fn main() {
   let text = include_str!("../../input2.txt");
