@@ -26,7 +26,7 @@ pub fn process(input: &str) -> usize {
   data.iter().map(|v| count_arrangements(&v.0, &v.1)).sum()
 }
 
-pub fn count_arrangements(arrangement: &String, springs: &Vec<bool>) -> usize {
+pub fn count_arrangements(arrangement: &String, springs: &[bool]) -> usize {
   let n = arrangement.len();
   let m = springs.len();
 
@@ -35,7 +35,7 @@ pub fn count_arrangements(arrangement: &String, springs: &Vec<bool>) -> usize {
 
   for i in (0..=n - 1).rev() {
     for j in (0..=m - 1).rev() {
-      let (damaged, operational) = match arrangement.chars().nth(i).unwrap() {
+      let (damaged, operational) = match arrangement.chars().nth(i).unwrap_or('_') {
         '#' => (true, false),
         '.' => (false, true),
         _ => (true, true),
