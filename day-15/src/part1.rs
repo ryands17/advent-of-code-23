@@ -1,15 +1,14 @@
 pub fn process(input: &str) -> usize {
-  input
-    .split(',')
-    .map(|val| {
-      val.chars().fold(0, |acc, ch| {
-        let mut n = (ch as usize) + acc;
-        n *= 17;
-        n %= 256;
-        n
-      })
-    })
-    .sum::<usize>()
+  input.split(',').map(hash).sum::<usize>()
+}
+
+fn hash(s: &str) -> usize {
+  s.chars().fold(0, |acc, ch| {
+    let mut n = (ch as usize) + acc;
+    n *= 17;
+    n %= 256;
+    n
+  })
 }
 
 #[cfg(test)]
